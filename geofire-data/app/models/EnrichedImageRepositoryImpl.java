@@ -21,8 +21,7 @@ public class EnrichedImageRepositoryImpl implements EnrichedImageRepository {
     
     public EnrichedImageRepositoryImpl () {
         images = new ArrayList<EnrichedImage>();
-    }
-    
+    }    
     
     @Override
     public void loadDirectory(File aPath) {
@@ -56,13 +55,23 @@ public class EnrichedImageRepositoryImpl implements EnrichedImageRepository {
 			}
 			return false;
 		}
-	}
-    
+	}    
     
     @Override
     public List<EnrichedImage> getAllImages() {
         return images;
-    }
+    }       
     
-    
+    @Override
+    public List<EnrichedImage> getImagesInBounds(Float neLat, Float neLng, Float swLat, Float swLng) {       
+        List<EnrichedImage> myImages = new ArrayList<EnrichedImage>();
+        for(EnrichedImage img : images) {
+            double imgLat = img.geoLocation.getLatitude();
+            double imgLng = img.geoLocation.getLongitude();
+            if(imgLat <= neLat  && imgLat >= swLat && imgLng <= neLng && imgLng >= swLng) {
+                myImages.add(img);
+            }
+        }
+        return myImages;
+    }    
 }

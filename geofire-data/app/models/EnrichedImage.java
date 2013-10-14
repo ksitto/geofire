@@ -15,6 +15,7 @@ public class EnrichedImage {
     private File file;
 	private Metadata metadata;
 	public GeoLocation geoLocation;
+    public String imgKey;
     
     private static final ALogger LOG = play.Logger.of(EnrichedImage.class);
     
@@ -23,6 +24,7 @@ public class EnrichedImage {
     
     public EnrichedImage(File aFile) throws ImageProcessingException, IOException {
         file = aFile;
+        imgKey = aFile.getName();
         refreshMetadata();
     }
     
