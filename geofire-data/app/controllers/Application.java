@@ -19,20 +19,30 @@ public class Application extends Controller {
     private EnrichedImageRepository repo;
     
     public Application() {
+        ALogger log = play.Logger.of(Application.class);        
+        initializeRepo();
+    }
+    
+    private void initializeRepo() {
         repo = new EnrichedImageRepositoryImpl();
+        File rootDirectory = Play.application().getFile("public/data/ec1m_landmark_images-sample");                                
+        repo.loadDirectory(rootDirectory);        
     }
     
     public Result index() {                 
-        response().setHeader("Access-Control-Allow-Origin", "*");
-        
-        ALogger log = play.Logger.of(Application.class);
-        
-        File rootDirectory = Play.application().getFile("public/data/ec1m_landmark_images-sample");        
-                
-        log.warn("doing work...");
-        repo.loadDirectory(rootDirectory);
-        
+        response().setHeader("Access-Control-Allow-Origin", "*");                                                
+        return ok("READY");
+    }
+    
+    public Result getAll() {
+        response().setHeader("Access-Control-Allow-Origin", "*");                                                
         List<EnrichedImage> images = repo.getAllImages();         
+        return ok(Json.toJson(images));
+    }
+    
+    public Result getLocations(Float neLat, Float neLng, Float swLat, Float swLng) {
+        response().setHeader("Access-Control-Allow-Origin", "*");        
+        List<EnrichedImage> images = repo.getImagesInBounds(neLat, neLng, swLat, swLng);         
         return ok(Json.toJson(images));
     }
     
