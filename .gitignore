@@ -12,6 +12,8 @@ RemoteSystemsTempFiles
 project
 target
 .*
+!lib/**
+!.gitignore
 
 # Data
 public/data
