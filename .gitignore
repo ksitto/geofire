@@ -9,3 +9,9 @@
 Servers
 .metadata
 RemoteSystemsTempFiles
+project
+target
+.*
+
+# Data
+public/data

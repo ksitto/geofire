@@ -1,0 +1,22 @@
+@(title: String)
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>@title</title>
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcELiK3n1rrsNZuMu3yTEaDa0-BhPny9Q&sensor=false"></script>
+<script type="text/javascript"
+	src='@routes.Assets.at("javascripts/jquery-2.0.3.js")'></script>
+<script type="text/javascript"
+	src='@routes.Assets.at("javascripts/markers.js")'></script>
+	<script type="text/javascript"
+	src='@routes.Assets.at("javascripts/markerclusterer.js")'></script>
+</head>
+<body>
+	<div id="map"></div>
+	<div>
+	<section id="gallery"></section>	
+	</div>	
+</body>
+</html>
