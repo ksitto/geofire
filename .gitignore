@@ -9,9 +9,9 @@
 Servers
 .metadata
 RemoteSystemsTempFiles
-project
-target
+**/target
 .*
+logs
 !lib/**
 !.gitignore
 

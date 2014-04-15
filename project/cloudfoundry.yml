@@ -1,0 +1,7 @@
+applications:
+- name: geofire
+  memory: 1024M
+  instances: 1
+  host: ksitto-geofire
+  path: ../target/geofire-1.0-SNAPSHOT.war
+  domain: cfapps.io

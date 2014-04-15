@@ -1,6 +1,12 @@
-name := """geo2"""
+import com.github.play2war.plugin._
+
+name := """geofire"""
 
 version := "1.0-SNAPSHOT"
+
+Play2WarPlugin.play2WarSettings
+
+Play2WarKeys.servletVersion := "3.0"
 
 libraryDependencies ++= Seq(
   // Select Play modules
@@ -17,6 +23,11 @@ libraryDependencies ++= Seq(
   // Add your own project dependencies in the form:
   // "group" % "artifact" % "version"
   "com.drewnoakes" % "metadata-extractor" % "2.6.2"
+)
+
+javacOptions in Compile ++= Seq(
+	"-source", "1.7",
+	"-target", "1.7"
 )
 
 play.Project.playScalaSettings
