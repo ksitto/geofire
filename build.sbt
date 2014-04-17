@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
   //jdbc,      // The JDBC connection pool and the play.api.db API
   //anorm,     // Scala RDBMS Library
   //javaJdbc,  // Java database API
-  //javaEbean, // Java Ebean plugin
+  javaEbean, // Java Ebean plugin
   //javaJpa,   // Java JPA plugin
   //filters,   // A set of built-in filters
   javaCore,  // The core Java API
@@ -22,7 +22,11 @@ libraryDependencies ++= Seq(
   "org.webjars" % "bootstrap" % "2.3.1",
   // Add your own project dependencies in the form:
   // "group" % "artifact" % "version"
-  "com.drewnoakes" % "metadata-extractor" % "2.6.2"
+  "com.drewnoakes" % "metadata-extractor" % "2.6.2",
+  "com.amazonaws" % "aws-java-sdk" % "1.3.11",
+  "redis.clients" % "jedis" % "2.0.0",
+  "net.sourceforge.argo" % "argo" % "3.10",
+  "com.google.code.gson" % "gson" % "2.2.4"
 )
 
 javacOptions in Compile ++= Seq(

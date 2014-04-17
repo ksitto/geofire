@@ -4,7 +4,7 @@ $(document).ready(function() {
 		width : 600
 	});
 	var myLatLng = new google.maps.LatLng(39.1981, -76.80224);
-	MYMAP.init('#map', myLatLng, 15);
+	MYMAP.init('#map', myLatLng, 3);
 
 	$("#showmarkers").click(function(e) {
 		MYMAP.getLocations();
@@ -37,7 +37,7 @@ MYMAP.init = function(selector, latLng, zoom) {
 
 MYMAP.getLocations = function(neLat, neLng, swLat, swLng) {
 	$.getJSON(
-			"http://localhost:9000/application/window",
+			application_root + "/window",
 			{
 				neLat : neLat,
 				neLng : neLng,
@@ -52,8 +52,8 @@ MYMAP.getLocations = function(neLat, neLng, swLat, swLng) {
 
 					var marker = new google.maps.Marker({
 						position : new google.maps.LatLng(
-								entry.geoLocation.latitude,
-								entry.geoLocation.longitude),
+								entry.latitude,
+								entry.longitude),
 						draggable : false,
 						title : entry.imgKey
 					});
@@ -61,7 +61,7 @@ MYMAP.getLocations = function(neLat, neLng, swLat, swLng) {
 					markers.push(marker);
 
 					var img = document.createElement("img");
-					img.setAttribute("src", "/assets/data/" + entry.imgKey);
+					img.setAttribute("src", entry.path);
 					img.setAttribute("height", "76");
 					img.setAttribute("width", "134");
 					document.getElementById("gallery").appendChild(img);

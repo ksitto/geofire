@@ -12,25 +12,33 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.GpsDirectory;
 
 public class EnrichedImage {
-    private File file;
-	private Metadata metadata;
-	public GeoLocation geoLocation;
-    public String imgKey;
-    
-    private static final ALogger LOG = play.Logger.of(EnrichedImage.class);
-    
-    public EnrichedImage() {        
-    }
-    
-    public EnrichedImage(File aFile) throws ImageProcessingException, IOException {
-        file = aFile;
-        imgKey = aFile.getName();
-        refreshMetadata();
-    }
-    
-    private void refreshMetadata() throws ImageProcessingException, IOException {
-        metadata = ImageMetadataReader.readMetadata(file);
-        GpsDirectory gpsDirectory = metadata.getDirectory(GpsDirectory.class);
-    	geoLocation = gpsDirectory.getGeoLocation();
-    }
+
+	public double latitude = 0;
+	public double longitude = 0;
+	public String imgKey;
+	public String path;
+
+	private static final ALogger LOG = play.Logger.of(EnrichedImage.class);
+
+	public EnrichedImage() {
+	}
+
+	public EnrichedImage(File aFile) throws ImageProcessingException,
+			IOException {
+		imgKey = aFile.getName();
+		refreshMetadata(aFile);
+	}
+
+	private void refreshMetadata(File aFile) throws ImageProcessingException,
+			IOException {
+		Metadata metadata = ImageMetadataReader.readMetadata(aFile);
+		GpsDirectory gpsDirectory = metadata.getDirectory(GpsDirectory.class);
+		if (gpsDirectory != null) {
+			GeoLocation geoLocation = gpsDirectory.getGeoLocation();
+			if (geoLocation != null) {
+				this.latitude = geoLocation.getLatitude();
+				this.longitude = geoLocation.getLongitude();
+			}
+		}
+	}
 }

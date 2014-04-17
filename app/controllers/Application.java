@@ -1,32 +1,22 @@
 package controllers;
 
-import play.mvc.Controller;
-import play.mvc.Result;
-import play.*;
-import play.api.Logger;
-import play.Logger.ALogger;
-import play.libs.Json;
+import java.util.List;
 
 import models.EnrichedImage;
 import models.EnrichedImageRepository;
-import models.LocalMemoryEnrichedImageRepository;
-
-import java.io.File;
-import java.util.List;
+import models.RedisEnrichedImageRepository;
+import play.Logger.ALogger;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 public class Application extends Controller {
 
 	private EnrichedImageRepository repo;
+	ALogger log = play.Logger.of("application");
 
 	public Application() {
-		ALogger log = play.Logger.of(Application.class);
-		initializeRepo();
-	}
-
-	private void initializeRepo() {
-		repo = new LocalMemoryEnrichedImageRepository();
-		File rootDirectory = Play.application().getFile("public/data");
-		repo.loadDirectory(rootDirectory);
+		repo = new RedisEnrichedImageRepository();
 	}
 
 	public Result index() {
@@ -67,4 +57,8 @@ public class Application extends Controller {
 		return ok();
 	}
 
+	public Result deleteAll() {
+		repo.deleteAll();
+		return ok();
+	}
 }
