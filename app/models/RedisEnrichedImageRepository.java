@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.ConfigurationException;
+
+import play.Logger.ALogger;
 import play.Play;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -21,9 +24,8 @@ import com.google.gson.Gson;
 public class RedisEnrichedImageRepository implements EnrichedImageRepository {
 
 	JedisPool pool;
-	EnrichedImageCache cache;
 
-	public RedisEnrichedImageRepository() {
+	public RedisEnrichedImageRepository() throws ConfigurationException {
 		try {
 			String vcap_services = System.getenv("VCAP_SERVICES");
 
@@ -43,12 +45,21 @@ public class RedisEnrichedImageRepository implements EnrichedImageRepository {
 				password = credentials.getStringValue("password");
 
 			} else {
-				hostname = Play.application().configuration()
-						.getString("redis.hostname");
-				port = Integer.parseInt(Play.application().configuration()
-						.getString("redis.port"));
-				password = Play.application().configuration()
-						.getString("redis.password");
+				if (Play.application().configuration().keys()
+						.contains("redis.hostname")
+						&& Play.application().configuration().keys()
+								.contains("redis.port")
+						&& Play.application().configuration().keys()
+								.contains("redis.password")) {
+					hostname = Play.application().configuration()
+							.getString("redis.hostname");
+					port = Integer.parseInt(Play.application().configuration()
+							.getString("redis.port"));
+					password = Play.application().configuration()
+							.getString("redis.password");
+				} else {
+					throw new ConfigurationException();
+				}
 			}
 
 			pool = new JedisPool(new JedisPoolConfig(), hostname, port,
@@ -93,28 +104,12 @@ public class RedisEnrichedImageRepository implements EnrichedImageRepository {
 	@Override
 	public List<EnrichedImage> getImagesInBounds(Float neLat, Float neLng,
 			Float swLat, Float swLng) {
-		EnrichedImageCache cache = EnrichedImageCache.getInstance();
-		if (!cache.contains(neLat, neLng, swLat, swLng)) {
 
-			List<EnrichedImage> images = new ArrayList<EnrichedImage>();
+		RedisEnrichedImageCache cache = RedisEnrichedImageCache
+				.getInstance(pool);
 
-			Gson gson = new Gson();
-			Jedis jedis = pool.getResource();
-			for (String key : jedis.keys("*")) {
-				EnrichedImage img = gson.fromJson(key, EnrichedImage.class);
-				double imgLat = img.latitude;
-				double imgLng = img.longitude;
-				images.add(img);
-			}
-			pool.returnResource(jedis);
-
-			EnrichedImageCache.update(images, Float.POSITIVE_INFINITY,
-					Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY,
-					Float.NEGATIVE_INFINITY);
-		}
-
-		cache = EnrichedImageCache.getInstance();
 		List<EnrichedImage> images = new ArrayList<EnrichedImage>();
+
 		for (EnrichedImage img : cache.cache) {
 			if (img.latitude <= neLat && img.latitude >= swLat
 					&& img.longitude <= neLng && img.longitude >= swLng) {
@@ -132,5 +127,53 @@ public class RedisEnrichedImageRepository implements EnrichedImageRepository {
 			jedis.del(key);
 		}
 		pool.returnResource(jedis);
+	}
+
+	private static class RedisEnrichedImageCache {
+		private static final ALogger LOG = play.Logger.of("application");
+		private static RedisEnrichedImageCache instance;
+		public List<EnrichedImage> cache;
+		protected long lastUpdate = 0L;
+		private static final long AGE_OFF = 10000;
+
+		private RedisEnrichedImageCache() {
+		}
+
+		public static synchronized RedisEnrichedImageCache getInstance(
+				JedisPool aPool) {
+
+			if (instance == null) {
+				instance = new RedisEnrichedImageCache();
+			}
+
+			if (instance.isExpired()) {
+				instance.update(aPool);
+			}
+
+			return instance;
+		}
+
+		protected synchronized void update(JedisPool aPool) {
+
+			LOG.info("updating the cache");
+
+			cache = new ArrayList<EnrichedImage>();
+
+			Gson gson = new Gson();
+			Jedis jedis = aPool.getResource();
+			for (String key : jedis.keys("*")) {
+				EnrichedImage img = gson.fromJson(key, EnrichedImage.class);
+				double imgLat = img.latitude;
+				double imgLng = img.longitude;
+				cache.add(img);
+			}
+			aPool.returnResource(jedis);
+
+			lastUpdate = System.currentTimeMillis();
+		}
+
+		protected boolean isExpired() {
+			return (System.currentTimeMillis() >= (lastUpdate + AGE_OFF));
+		}
 	}
 }

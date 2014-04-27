@@ -1,24 +1,39 @@
 package controllers;
 
+import java.io.File;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.List;
 
+import javax.naming.ConfigurationException;
+
+import com.google.common.io.Resources;
+
 import models.EnrichedImageRepository;
+import models.LocalMemoryEnrichedImageRepository;
 import models.RedisEnrichedImageRepository;
 import models.S3File;
+import play.Play;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import plugins.S3Plugin;
 
 public class Upload extends Controller {
 
-	EnrichedImageRepository repository = new RedisEnrichedImageRepository();
+	EnrichedImageRepository repository;
+
+	public Upload() {
+
+		try {
+			repository = new RedisEnrichedImageRepository();
+		} catch (ConfigurationException e) {
+			repository = new LocalMemoryEnrichedImageRepository();
+		}
+
+	}
 
 	public Result index() {
-		List<S3File> uploads = new ArrayList<S3File>();
-		// new Model.Finder(UUID.class, S3File.class).all();
-
 		return ok(views.html.upload.render());
 	}
 
@@ -28,19 +43,16 @@ public class Upload extends Controller {
 
 		if (uploadFileParts != null) {
 			for (Http.MultipartFormData.FilePart uploadFilePart : uploadFileParts) {
-
-				S3File s3File = new S3File();
-				s3File.name = uploadFilePart.getFilename();
-				s3File.file = uploadFilePart.getFile();
-				s3File.save();
-
+				URL fileLocation;
 				try {
-					repository.loadFile(uploadFilePart.getFile(), s3File
-							.getUrl().toString());
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					fileLocation = uploadFile(uploadFilePart.getFile(),
+							uploadFilePart.getFilename());
+				} catch (MalformedURLException e1) {
+					return badRequest("File upload error");
 				}
+
+				repository.loadFile(uploadFilePart.getFile(),
+						fileLocation.toString());
 			}
 			return redirect(routes.Upload.index());
 		} else {
@@ -52,5 +64,26 @@ public class Upload extends Controller {
 	public static Result uploadDirectory() {
 
 		return null;
+	}
+
+	private URL uploadFile(File aFile, String fileName)
+			throws MalformedURLException {
+		URL aUrl;
+
+		if (null != S3Plugin.amazonS3) {
+			S3File s3File = new S3File();
+			s3File.name = fileName;
+			s3File.file = aFile;
+			s3File.save();
+
+			aUrl = s3File.getUrl();
+		} else {
+			aFile.renameTo(new File(Play.application().getFile("public/data"),
+					fileName));
+
+			aUrl = new URL("http", "localhost", 9000, "assets/data/" + fileName);
+		}
+
+		return aUrl;
 	}
 }

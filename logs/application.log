@@ -1,173 +1,73 @@
-2014-04-14 15:54:59,068 - [INFO] - from play in pool-31-thread-3 
+2014-04-27 13:03:56,069 - [INFO] - from play in pool-31-thread-2 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2014-04-14 15:55:05,516 - [INFO] - from play in play-internal-execution-context-1 
+2014-04-27 13:04:08,234 - [WARN] - from play in play-internal-execution-context-1 
+Plugin [plugins.S3Plugin] is disabled
+
+2014-04-27 13:04:08,434 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2014-04-14 15:56:08,951 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
+2014-04-27 13:04:11,950 - [ERROR] - from models.EnrichedImage in play-akka.actor.default-dispatcher-2 
 
-2014-04-14 16:02:24,336 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:65: ERROR - Parse error. missing { before function body
-					google.maps.event.addListener(marker, 'click', function()) {
-					                                                         ^
+java.io.FileNotFoundException: C:\Users\noone\AppData\Local\Temp\multipartBody1295256107341241615asTemporaryFile (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method) ~[na:1.8.0]
+	at java.io.FileInputStream.<init>(FileInputStream.java:131) ~[na:1.8.0]
+	at com.drew.imaging.ImageMetadataReader.readMetadata(ImageMetadataReader.java:86) ~[na:na]
+	at models.EnrichedImage.refreshMetadata(EnrichedImage.java:34) ~[classes/:na]
+	at models.EnrichedImage.<init>(EnrichedImage.java:29) ~[classes/:na]
+	at models.LocalMemoryEnrichedImageRepository.loadFile(LocalMemoryEnrichedImageRepository.java:47) ~[classes/:na]
+	at controllers.Upload.upload(Upload.java:54) [classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$10$$anonfun$apply$20.apply(routes_routing.scala:161) [classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$10$$anonfun$apply$20.apply(routes_routing.scala:161) [classes/:na]
+	at play.core.Router$HandlerInvoker$$anon$7$$anon$2.invocation(Router.scala:183) [na:na]
+	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) [na:na]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:56) [na:na]
+	at play.core.j.JavaAction$$anon$3.apply(JavaAction.scala:91) [na:na]
+	at play.core.j.JavaAction$$anon$3.apply(JavaAction.scala:90) [na:na]
+	at play.core.j.FPromiseHelper$$anonfun$flatMap$1.apply(FPromiseHelper.scala:82) [na:na]
+	at play.core.j.FPromiseHelper$$anonfun$flatMap$1.apply(FPromiseHelper.scala:82) [na:na]
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:251) [na:na]
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:249) [na:na]
+	at com.typesafe.trace.FutureCallback.apply(FutureTrace.scala:136) [na:na]
+	at com.typesafe.trace.FutureCallback.apply(FutureTrace.scala:127) [na:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [na:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:37) [na:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39) [na:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:385) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [na:na]
 
+2014-04-27 13:05:18,143 - [ERROR] - from models.EnrichedImage in play-akka.actor.default-dispatcher-6 
 
-2014-04-14 16:02:24,336 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:66: ERROR - Parse error. syntax error
-						infowindow.open(MYMAP.map, marker);
-						          ^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:68: ERROR - Parse error. missing ) after argument list
-					markers.push(marker);
-					^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:68: ERROR - Parse error. syntax error
-					markers.push(marker);
-					       ^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:72: ERROR - Parse error. missing ; before statement
-			}).done(function() {
-			 ^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:73: ERROR - Parse error. syntax error
-	}).fail(function() {
-	 ^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:74: ERROR - Parse error. syntax error
-		console.log("error");
-		       ^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:75: ERROR - Parse error. syntax error
-	});
-	^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:76: ERROR - Parse error. syntax error
-}
-^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:78: ERROR - Parse error. missing ; before statement
-function PlotMarker(lat, lon) {
-                              ^
-
-
-2014-04-14 16:02:24,337 - [ERROR] - from com.google.javascript.jscomp in pool-43-thread-3 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:86: ERROR - Parse error. syntax error
-}
-^
-
-
-2014-04-14 16:02:24,380 - [ERROR] - from application in New I/O worker #5 
-
-
-! @6hpne13m7 - Internal server error, for (GET) [/application] ->
-
-play.PlayExceptions$AssetCompilationException: Compilation error[Parse error. missing { before function body]
-	at play.core.jscompile.JavascriptCompiler$.compile(JavascriptCompiler.scala:65) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$JavascriptCompiler$3.apply(PlayAssetsCompiler.scala:96) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$JavascriptCompiler$3.apply(PlayAssetsCompiler.scala:96) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1$$anonfun$3.liftedTree1$1(PlayAssetsCompiler.scala:52) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1$$anonfun$3.apply(PlayAssetsCompiler.scala:51) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1$$anonfun$3.apply(PlayAssetsCompiler.scala:48) ~[na:na]
-	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:251) ~[na:na]
-	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:251) ~[na:na]
-	at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59) ~[na:na]
-	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47) ~[na:na]
-	at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:251) ~[na:na]
-	at scala.collection.AbstractTraversable.flatMap(Traversable.scala:105) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1.apply(PlayAssetsCompiler.scala:48) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1.apply(PlayAssetsCompiler.scala:21) ~[na:na]
-	at scala.Function7$$anonfun$tupled$1.apply(Function7.scala:35) ~[na:na]
-	at scala.Function7$$anonfun$tupled$1.apply(Function7.scala:34) ~[na:na]
-	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47) ~[na:na]
-	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:42) ~[na:na]
-	at sbt.std.Transform$$anon$4.work(System.scala:64) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:18) ~[na:na]
-	at sbt.Execute.work(Execute.scala:244) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:160) ~[na:na]
-	at sbt.CompletionService$$anon$2.call(CompletionService.scala:30) ~[na:na]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[na:1.8.0]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[na:1.8.0]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[na:1.8.0]
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0]
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0]
-	at java.lang.Thread.run(Thread.java:744) [na:1.8.0]
-
-2014-04-14 16:02:44,620 - [ERROR] - from com.google.javascript.jscomp in pool-44-thread-1 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:68: ERROR - Parse error. missing ) after argument list
-					markers.push(marker);
-					^
-
-
-2014-04-14 16:02:44,620 - [ERROR] - from com.google.javascript.jscomp in pool-44-thread-1 
-C:\Users\noone\geo2\app\assets\javascripts\markers.js:68: ERROR - Parse error. syntax error
-					markers.push(marker);
-					       ^
-
-
-2014-04-14 16:02:44,667 - [ERROR] - from application in New I/O worker #5 
-
-
-! @6hpne27m6 - Internal server error, for (GET) [/application] ->
-
-play.PlayExceptions$AssetCompilationException: Compilation error[Parse error. missing ) after argument list]
-	at play.core.jscompile.JavascriptCompiler$.compile(JavascriptCompiler.scala:65) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$JavascriptCompiler$3.apply(PlayAssetsCompiler.scala:96) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$JavascriptCompiler$3.apply(PlayAssetsCompiler.scala:96) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1$$anonfun$3.liftedTree1$1(PlayAssetsCompiler.scala:52) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1$$anonfun$3.apply(PlayAssetsCompiler.scala:51) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1$$anonfun$3.apply(PlayAssetsCompiler.scala:48) ~[na:na]
-	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:251) ~[na:na]
-	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:251) ~[na:na]
-	at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59) ~[na:na]
-	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:47) ~[na:na]
-	at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:251) ~[na:na]
-	at scala.collection.AbstractTraversable.flatMap(Traversable.scala:105) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1.apply(PlayAssetsCompiler.scala:48) ~[na:na]
-	at play.PlayAssetsCompiler$$anonfun$AssetsCompiler$1.apply(PlayAssetsCompiler.scala:21) ~[na:na]
-	at scala.Function7$$anonfun$tupled$1.apply(Function7.scala:35) ~[na:na]
-	at scala.Function7$$anonfun$tupled$1.apply(Function7.scala:34) ~[na:na]
-	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47) ~[na:na]
-	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:42) ~[na:na]
-	at sbt.std.Transform$$anon$4.work(System.scala:64) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:18) ~[na:na]
-	at sbt.Execute.work(Execute.scala:244) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:237) ~[na:na]
-	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:160) ~[na:na]
-	at sbt.CompletionService$$anon$2.call(CompletionService.scala:30) ~[na:na]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[na:1.8.0]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[na:1.8.0]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[na:1.8.0]
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0]
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0]
-	at java.lang.Thread.run(Thread.java:744) [na:1.8.0]
-
-2014-04-14 16:15:32,567 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
-
-2014-04-14 16:28:19,890 - [INFO] - from play in play-internal-execution-context-6 
-Application started (Dev)
+java.io.FileNotFoundException: C:\Users\noone\AppData\Local\Temp\multipartBody6869689064170998902asTemporaryFile (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method) ~[na:1.8.0]
+	at java.io.FileInputStream.<init>(FileInputStream.java:131) ~[na:1.8.0]
+	at com.drew.imaging.ImageMetadataReader.readMetadata(ImageMetadataReader.java:86) ~[na:na]
+	at models.EnrichedImage.refreshMetadata(EnrichedImage.java:34) ~[classes/:na]
+	at models.EnrichedImage.<init>(EnrichedImage.java:29) ~[classes/:na]
+	at models.LocalMemoryEnrichedImageRepository.loadFile(LocalMemoryEnrichedImageRepository.java:47) ~[classes/:na]
+	at controllers.Upload.upload(Upload.java:54) [classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$10$$anonfun$apply$20.apply(routes_routing.scala:161) [classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$10$$anonfun$apply$20.apply(routes_routing.scala:161) [classes/:na]
+	at play.core.Router$HandlerInvoker$$anon$7$$anon$2.invocation(Router.scala:183) [na:na]
+	at play.core.Router$Routes$$anon$1.invocation(Router.scala:377) [na:na]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:56) [na:na]
+	at play.core.j.JavaAction$$anon$3.apply(JavaAction.scala:91) [na:na]
+	at play.core.j.JavaAction$$anon$3.apply(JavaAction.scala:90) [na:na]
+	at play.core.j.FPromiseHelper$$anonfun$flatMap$1.apply(FPromiseHelper.scala:82) [na:na]
+	at play.core.j.FPromiseHelper$$anonfun$flatMap$1.apply(FPromiseHelper.scala:82) [na:na]
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:251) [na:na]
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:249) [na:na]
+	at com.typesafe.trace.FutureCallback.apply(FutureTrace.scala:136) [na:na]
+	at com.typesafe.trace.FutureCallback.apply(FutureTrace.scala:127) [na:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [na:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:37) [na:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39) [na:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:385) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [na:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [na:na]
 

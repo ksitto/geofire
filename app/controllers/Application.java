@@ -2,8 +2,11 @@ package controllers;
 
 import java.util.List;
 
+import javax.naming.ConfigurationException;
+
 import models.EnrichedImage;
 import models.EnrichedImageRepository;
+import models.LocalMemoryEnrichedImageRepository;
 import models.RedisEnrichedImageRepository;
 import play.Logger.ALogger;
 import play.libs.Json;
@@ -16,7 +19,11 @@ public class Application extends Controller {
 	ALogger log = play.Logger.of("application");
 
 	public Application() {
-		repo = new RedisEnrichedImageRepository();
+		try {
+			repo = new RedisEnrichedImageRepository();
+		} catch (ConfigurationException e) {
+			repo = new LocalMemoryEnrichedImageRepository();
+		}
 	}
 
 	public Result index() {

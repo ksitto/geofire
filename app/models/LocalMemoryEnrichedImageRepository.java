@@ -1,12 +1,12 @@
 package models;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import play.Logger.ALogger;
+import play.Play;
 
 import com.drew.imaging.ImageProcessingException;
 
@@ -16,41 +16,9 @@ public class LocalMemoryEnrichedImageRepository implements
 	private List<EnrichedImage> images;
 	private static final ALogger LOG = play.Logger.of(EnrichedImage.class);
 
-	public LocalMemoryEnrichedImageRepository() {		
+	public LocalMemoryEnrichedImageRepository() {
 		images = new ArrayList<EnrichedImage>();
-	}
-	
-	public void loadDirectory(File aPath) {
-		for (File imgFile : aPath.listFiles(new ImageFilter())) {
-			try {
-				EnrichedImage enrichedImage = new EnrichedImage(imgFile);
-				images.add(enrichedImage);
-			} catch (ImageProcessingException e) {
-				LOG.error("", e);
-			} catch (IOException e) {
-				LOG.error("", e);
-			}
-		}
-	}
-
-	private static final class ImageFilter implements FileFilter {
-		private final String[] acceptedExtensions = new String[] { ".jpg",
-				".jpeg" };
-
-		@Override
-		public boolean accept(File pathname) {
-			if (pathname.isDirectory()) {
-				return false;
-			} else {
-				for (String acceptedExtension : acceptedExtensions) {
-					if (pathname.getName().toLowerCase()
-							.endsWith(acceptedExtension)) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
+		initializeRepo();
 	}
 
 	@Override
@@ -69,19 +37,34 @@ public class LocalMemoryEnrichedImageRepository implements
 					&& imgLng >= swLng) {
 				myImages.add(img);
 			}
-		}		
+		}
 		return myImages;
 	}
 
 	@Override
 	public void loadFile(File aPath, String persistentPath) {
-		// TODO Auto-generated method stub
+		try {
+			EnrichedImage enrichedImage = new EnrichedImage(aPath);
+			enrichedImage.path = persistentPath;
+			images.add(enrichedImage);
+		} catch (ImageProcessingException e) {
+			LOG.error("", e);
+		} catch (IOException e) {
+			LOG.error("", e);
+		}
 
 	}
 
 	@Override
 	public void deleteAll() {
-		// TODO Auto-generated method stub
+		images.clear();
+	}
 
+	private void initializeRepo() {
+		File rootDirectory = Play.application().getFile("public/data");
+
+		for (File imgFile : rootDirectory.listFiles()) {
+			loadFile(imgFile, new String("assets/data/" + imgFile.getName()));
+		}
 	}
 }

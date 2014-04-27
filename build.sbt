@@ -26,7 +26,8 @@ libraryDependencies ++= Seq(
   "com.amazonaws" % "aws-java-sdk" % "1.3.11",
   "redis.clients" % "jedis" % "2.0.0",
   "net.sourceforge.argo" % "argo" % "3.10",
-  "com.google.code.gson" % "gson" % "2.2.4"
+  "com.google.code.gson" % "gson" % "2.2.4",
+  "com.google.guava" % "guava" % "17.0-rc2"
 )
 
 javacOptions in Compile ++= Seq(
