@@ -61,7 +61,7 @@ public class LocalMemoryEnrichedImageRepository implements
 	}
 
 	private void initializeRepo() {
-		File rootDirectory = Play.application().getFile("public/data");
+		File rootDirectory = Play.application().getFile("public/images");
 
 		for (File imgFile : rootDirectory.listFiles()) {
 			loadFile(imgFile, new String("assets/data/" + imgFile.getName()));
