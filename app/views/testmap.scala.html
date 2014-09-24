@@ -1,28 +1,67 @@
 @(title: String)
-
 <!DOCTYPE html>
-<html>
 <head>
-<title>@title</title>
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcELiK3n1rrsNZuMu3yTEaDa0-BhPny9Q&sensor=false"></script>
-<script type="text/javascript"
-	src='@routes.Assets.at("javascripts/jquery-2.0.3.js")'></script>
-<script type="text/javascript"
-	src='@routes.Assets.at("javascripts/markers.js")'></script>
-<script type="text/javascript"
-	src='@routes.Assets.at("javascripts/markerclusterer.js")'></script>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src="https://rawgithub.com/calvinmetcalf/leaflet-ajax/master/dist/leaflet.ajax.min.js"></script>
+<script src="http://labs.easyblog.it/maps/leaflet-layerjson/dist/leaflet-layerjson.min.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+
+<style>
+#map {
+	width:700px;
+	height:500px;
+        float:left;
+}
+#images {
+        float:left;
+        width: 400px;
+        margin: 5px;
+}
+
+
+</style>
+<link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
 <script type="text/javascript">
 var application_root='@routes.Application.index()';
 </script>
-	
 </head>
+ 
 <body>
-	<div id="map"></div>
-	<div>
-	<label id="image_count"> </label>
-	<section id="gallery">	
-	</section>		
-	</div>	
+<div id="map"></div><div id="images"></div>
+<script>
+ var map = L.map('map').setView([41.384,2.17678], 9);
+ var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+ })
+ var imageList = new Array();
+// {lat1},{lon1},{lat2},{lon2}
+ function onFocus(e) {
+    var markers = new L.MarkerClusterGroup();
+    $('#images').html('');
+    var jsonLayer = L.layerJSON({
+      url: application_root + "/window?neLat={lat2}&neLng={lon2}&swLat={lat1}&swLng={lon1}",
+      propertyLoc: ['latitude','longitude'],
+      propertyItems: '',
+      layerTarget: markers,
+      propertyTitle: 'path',
+      buildPopup: function(data, marker) {
+       $("#images").append("<img width=400 height=auto src="+data.path+" />")
+       imageList.push(data.path);
+       return "<img width=150 height=auto src="+data.path+"></img>" || null;
+     }
+    });
+   jsonLayer.addTo(map);
+   markers.addTo(map);
+   //console.log(jsonLayer);
+ }
+ tiles.addTo(map);
+ // map.addLayer(markers);
+ map.on('load', onFocus);
+ map.on('focus', onFocus);
+ map.on('blur', onFocus);
+ map.on('viewreset', onFocus);
+ console.log(imageList);
+</script>
 </body>
-</html>

@@ -21,7 +21,10 @@ public class Application extends Controller {
 	public Application() {
 		try {
 			repo = new RedisEnrichedImageRepository();
+			log.info("successfully initialized conncection to redis");
 		} catch (ConfigurationException e) {
+		    log.info("falling back to local memory");
+		    log.debug(e.getMessage());
 			repo = new LocalMemoryEnrichedImageRepository();
 		}
 	}
