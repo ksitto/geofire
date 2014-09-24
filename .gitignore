@@ -22,4 +22,5 @@ public/images
 # Play framework
 logs/*
 project/*
-conf/*
+!project/plugins.sbt
+conf/application.conf
