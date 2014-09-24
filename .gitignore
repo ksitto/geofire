@@ -16,5 +16,10 @@ logs
 !.gitignore
 
 # Data
-public/data
+public/images
 /bin
+
+# Play framework
+logs/*
+project/*
+conf/*
